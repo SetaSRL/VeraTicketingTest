@@ -188,19 +188,23 @@ implements RestrictedAccess, Threadable, Searchable {
 
     // Ticket Sources
     static protected $sources =  array(
-            'Phone' =>
-            /* @trans */ 'Phone',
+             'API' =>
+            /* @trans */ 'API',
             'Email' =>
             /* @trans */ 'Email',
-
             'Web' =>
-            /* @trans */ 'Web',
-            'API' =>
-            /* @trans */ 'API',
-            'Other' =>
-            /* @trans */ 'Other',
+            /* @trans */ 'Self Ticketing',
+            'Teams' =>
+            /* @trans */ 'Teams ',
+             'Phone' =>
+            /* @trans */ 'Phone',
             );
-
+    
+    // MultiTasks
+    static protected $multiTasks = array(
+        47=>array('Creazione mail + Invio comunicazioni','Registrazione a Shift','Consegna badge','Consegna materiali'),
+        28=>array('Riconsegna Beni Aziendali','Restituzione Badge','Cancellazione utenza SHIFT e blocco Mail')
+    );
     var $lastMsgId;
     var $last_message;
 
@@ -293,6 +297,9 @@ implements RestrictedAccess, Threadable, Searchable {
         return false;
     }
 
+    function getMultitasks() {
+        return static::$multiTasks;
+    }
     function hasFlag($flag) {
         return ($this->get('flags', 0) & $flag) != 0;
     }
@@ -384,6 +391,11 @@ implements RestrictedAccess, Threadable, Searchable {
 
     function isLocked() {
         return null !== $this->getLock();
+    }
+    
+    function isMultitaskEnabled() {
+        $resp=static::$multiTasks;
+        return isset($resp[$this->getTopicId()]);   
     }
 
     function getRole($staff) {
@@ -4091,7 +4103,7 @@ implements RestrictedAccess, Threadable, Searchable {
         // Create and verify the dynamic form entry for the new ticket
         $form = TicketForm::getNewInstance();
         $form->setSource($vars);
-
+        
         // If submitting via email or api, ensure we have a subject and such
         if (!in_array(strtolower($origin), array('web', 'staff'))) {
             foreach ($form->getFields() as $field) {
@@ -4103,7 +4115,8 @@ implements RestrictedAccess, Threadable, Searchable {
 
         if ($vars['uid'])
             $user = User::lookup($vars['uid']);
-
+      
+       
         $id=0;
         $fields=array();
         switch (strtolower($origin)) {
@@ -4184,7 +4197,8 @@ implements RestrictedAccess, Threadable, Searchable {
                     $ex->vars['email'], $ex->getRejectingFilter()->getName())
                 );
             }
-
+          
+           
             //Make sure the open ticket limit hasn't been reached. (LOOP CONTROL)
             if ($cfg->getMaxOpenTickets() > 0
                     && strcasecmp($origin, 'staff')
@@ -4250,8 +4264,7 @@ implements RestrictedAccess, Threadable, Searchable {
             }
         }
 
-
-
+        
         // Any errors above are fatal.
         if ($errors)
             return 0;
@@ -4373,8 +4386,7 @@ implements RestrictedAccess, Threadable, Searchable {
         if ($vars['duedate'] && !strcasecmp($origin,'staff'))
             $ticket->duedate = date('Y-m-d G:i',
                 Misc::dbtime($vars['duedate']));
-
-
+       
         if (!$ticket->save())
             return null;
         if (!($thread = TicketThread::create($ticket->getId())))

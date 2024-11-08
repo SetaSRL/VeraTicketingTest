@@ -7,6 +7,7 @@ if ($thisstaff && !strcasecmp($thisstaff->datetime_format, 'relative')) {
     };
 }
 
+echo Format::relativeTime(Misc::db2gmtime($datetime));
 $entryTypes = array('M'=>'message', 'R'=>'response', 'N'=>'note');
 $user = $entry->getUser() ?: $entry->getStaff();
 $name = $user ? $user->getName() : $entry->poster;

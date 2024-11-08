@@ -16,9 +16,9 @@ global $thisstaff;
   </span>
 
   <a class="truncate <?php if ($selected) echo ' active'; ?>" href="<?php echo $queue->getHref();
-    ?>" title="<?php echo Format::htmlchars($q->getName()); ?>">
+    ?>" title="<?php echo __($q->getName()); ?>">
       <?php
-        echo Format::htmlchars($q->getName()); ?>
+        echo __($q->getName()); ?>
       <?php
         if ($hasChildren) { ?>
             <i class="icon-caret-down"></i>

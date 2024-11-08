@@ -1,7 +1,6 @@
 <?php
 $report = new OverviewReport($_POST['start'], $_POST['period']);
 $plots = $report->getPlotData();
-
 ?>
 <script type="text/javascript" src="js/raphael-min.js?0375576"></script>
 <script type="text/javascript" src="js/g.raphael.js?0375576"></script>
@@ -13,6 +12,9 @@ $plots = $report->getPlotData();
 
 <form method="post" action="dashboard.php">
 <div id="basic_search">
+    <div>
+        <p><?php echo __('Refresh');?></p>
+    </div>
     <div style="min-height:25px;">
         <!--<p><?php //echo __('Select the starting time and period for the system activity graph');?></p>-->
             <?php echo csrf_token(); ?>
@@ -64,8 +66,9 @@ $plots = $report->getPlotData();
     $date = new DateTime('@'.$date);
     $date->setTimeZone(new DateTimeZone($cfg->getTimezone()));
     $timezone = $date->format('e');
-    $range[] = $date->format('F j, Y');
+    $range[] = $date->format('j F, Y');
   }
+  
   echo __($range[0] . ' - ' . $range[1] .  ' (' . Format::timezone($timezone) . ')');
 ?>
 

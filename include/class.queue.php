@@ -2303,6 +2303,7 @@ extends VerySimpleModel {
     }
 
     function getTranslateTag($subtag) {
+      
         return _H(sprintf('column.%s.%s.%s', $subtag, $this->queue_id, $this->id));
     }
     function getLocal($subtag) {

@@ -1,6 +1,8 @@
+<h2><p><?php
+echo $_GET['e'];
+?></p></h2>
 <?php
 if(!defined('OSTCLIENTINC')) die('Access Denied');
-
 $email=Format::input($_POST['luser']?:$_GET['e']);
 $passwd=Format::input($_POST['lpasswd']?:$_GET['t']);
 

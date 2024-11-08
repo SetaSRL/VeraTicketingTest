@@ -1,3 +1,4 @@
+    <span><P<?php echo __("My ticket"); ?></p</span> 
     <div>
         <div class="pull-right">
             <a href="queues.php?t=tickets&amp;a=add" class="green button action-button"><i class="icon-plus-sign"></i> <?php echo __('Add New Queue');?></a>
@@ -33,6 +34,7 @@
     </div>
     <div class="clear"></div>
  <?php csrf_token(); ?>
+ 
  <table class="list" border="0" cellspacing="1" cellpadding="0" width="940">
     <thead>
         <tr>

@@ -22,10 +22,15 @@ if ($info['error']) {
     echo sprintf('<p id="msg_notice">%s</p>', $info['msg']);
 } ?>
 <div id="new-task-form" style="display:block;">
+
+<?php
+include STAFFINC_DIR . 'templates/task-lookup.tmpl.php';
+?>
 <form method="post" class="org" action="<?php echo $info['action'] ?: '#tasks/add'; ?>">
+    
     <?php
-        $form = $form ?: TaskForm::getInstance();
-        echo $form->getForm($vars)->asTable(' ',
+        $form = $form ?: TaskForm::getInstance(); ?>
+        <?php echo $form->getForm($vars)->asTable(' ',
                 array('draft-namespace' => $namespace)
                 );
 

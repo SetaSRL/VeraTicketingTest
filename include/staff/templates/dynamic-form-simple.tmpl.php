@@ -40,6 +40,8 @@
         </div>
     <?php
     }
+    ?>
+    <?php 
     $form->emitJavascript($options);
     ?>
 </div>

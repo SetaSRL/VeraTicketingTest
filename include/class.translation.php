@@ -924,15 +924,17 @@ class CustomDataTranslation extends VerySimpleModel {
             $locale = $locale->getLanguage();
         elseif (!$locale)
             $locale = Internationalization::getCurrentLanguage();
-
+       
         // Perhaps a slight optimization would be to check if the selected
         // locale is also the system primary. If so, short-circuit
-
+       
         if ($locale) {
             if ($cache) {
                 $mo = static::getTranslation($locale);
-                if (isset($mo[$msgid]))
+                
+                if (isset($mo[$msgid])) {
                     $msgid = $mo[$msgid]->text;
+                }
             }
             elseif ($p = static::lookup(array(
                     'type' => $type,

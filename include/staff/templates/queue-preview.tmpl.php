@@ -26,7 +26,7 @@ if ($queue_sort = $queue->getDefaultSort()) {
 <?php
 foreach ($columns as $C) {
     echo sprintf('<th width="%s">%s</th>', $C->getWidth(),
-        Format::htmlchars($C->getHeading()));
+        __(Format::htmlchars($C->getHeading())));
 } ?>
     </tr>
   </thead>

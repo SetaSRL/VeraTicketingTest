@@ -488,16 +488,20 @@ $(function() {
         var url = 'ajax.php/'
         +$(this).attr('href').substr(1)
         +'?_uid='+new Date().getTime();
-        var $options = $(this).data('dialogConfig');
+         var $options = $(this).data('dialogConfig');
+         
         $.dialog(url, [201], function (xhr) {
             var tid = parseInt(xhr.responseText);
+            console.log("dialog function");
             if (tid) {
+                  console.log("tid");
                  window.location.href = 'tasks.php?id='+tid;
             } else {
+                console.log("no tid");
                 $.pjax.reload('#pjax-container');
             }
         }, $options);
-
+      
         return false;
     });
 

@@ -278,17 +278,19 @@ class Form {
     }
 
     function emitJavascript($options=array()) {
-
+       
         // Check if we need to emit javascript
         if (!($fid=$this->getFormId()))
             return;
         ?>
         <script type="text/javascript">
           $(function() {
+            console.log("js");
             <?php
             //XXX: We ONLY want to watch field on this form. We'll only
             // watch form inputs if form_id is specified. Current FORM API
             // doesn't generate the entire form  (just fields)
+            
             if ($fid) {
                 ?>
                 $(document).off('change.<?php echo $fid; ?>');

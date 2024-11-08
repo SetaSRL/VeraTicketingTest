@@ -1,0 +1,101 @@
+:root {
+    --header-bg: #29343A;
+    --header-title: #ffffff;
+    --header-title-hover: #a6bbc9;
+    --nav-bar-bg: #6C7B85;
+    --nav-bar-link: #ffffff;
+    --nav-bar-link-hover: #000000;
+    --mobile-menu-bg: #6C7B85;
+    --mobile-link-color: #ffffff;
+	--stickybar: #6C7B85;
+}
+
+#nav {
+  background-color: var(--header-bg);
+}
+#sub_nav {
+    background: var(--nav-bar-bg) !important;
+    height: 12px;
+    padding: 0;
+    max-width: 1240px;
+    /*margin: 57px auto;*/
+    border: 0;
+    line-height: 22px;
+    height:26px;
+}
+
+#sub_nav .small.icon-sort-down.pull-right {
+	display: none;
+}
+nav#customQ_nav #sub_nav {
+    line-height: 28px;
+}
+@media screen and (max-width: 1270px) {
+	ul#sub_nav {
+		margin-left: 12px !important;
+	}
+}
+
+#sub_nav a {
+    padding: initial;
+}
+ul#sub_nav a.active {
+    font-weight: 600;
+}
+#sub_nav li.top-queue + li > a {
+    margin-left: 14px;
+}
+a#new-ticket {
+    margin-left: 14px !important;
+}
+#sub_nav > li > a, #sub_nav > li + li > a, #customQ_nav .jb-overflowmenu-menu-primary li.item > a {
+    color: var(--nav-bar-link) !important;
+}
+
+.customQ-dropdown ul li:not(.personalQ):hover {
+    color: var(--header-title);
+    background-color: var(--header-bg);
+}
+
+#sub_nav > li > a:hover, #sub_nav > li + li > a:hover, #customQ_nav .jb-overflowmenu-menu-primary li.item:hover > a, #customQ_nav .jb-overflowmenu-menu-primary li.item > a:hover {
+    color: var(--nav-bar-link-hover) !important;
+}
+/* ==========================================================================
+ HIDE UGLY ICONS
+========================================================================== */
+.Icon {
+    width: auto;
+    padding-left: initial;
+}
+.Icon.staffAssigned,
+a.Ticket,
+a.assignedTickets,
+a.overdueTickets,
+a.answeredTickets,
+a.closedTickets,
+a.newTicket,
+a.pages,
+a.preferences,
+a.ticket-settings,
+a.lists,
+a.teams,
+a.groups,
+a.kb-settings,
+a.emailSettings ,
+a.email-settings,
+a.emailDiagnostic,
+a.emailTemplates, 
+a.logs, 
+a.preferences,
+a.helpTopics,
+a.ticketFilters,
+a.sla, 
+a.api, 
+a.forms, 
+a.users, 
+a.departments,
+a.kb,
+a.faq-categories {
+    background: none;
+    margin-left: 0;
+}

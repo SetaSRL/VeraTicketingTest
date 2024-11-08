@@ -199,7 +199,8 @@ if ($_POST)
                     <?php
                     $source = $info['source'] ?: 'Phone';
                     $sources = Ticket::getSources();
-                    unset($sources['Web'], $sources['API']);
+                      // unset($sources['Web'], $sources['API']);
+                    unset($sources['API']);
                     foreach ($sources as $k => $v)
                         echo sprintf('<option value="%s" %s>%s</option>',
                                 $k,

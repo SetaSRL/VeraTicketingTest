@@ -36,6 +36,7 @@ if ($info['topicId'] && ($topic=Topic::lookup($info['topicId']))) {
 <form id="ticketForm" method="post" action="open.php" enctype="multipart/form-data">
   <?php csrf_token(); ?>
   <input type="hidden" name="a" value="open">
+  <input type="hidden" name="otherid" id="otherid" value="">
   <table width="800" cellpadding="1" cellspacing="0" border="0">
     <tbody>
 <?php
@@ -85,6 +86,52 @@ if ($info['topicId'] && ($topic=Topic::lookup($info['topicId']))) {
         </td>
     </tr>
     </tbody>
+   
+    <tbody>
+        <tr>
+            <td colspan="2"><hr />
+            <div class="form-header" style="margin-bottom:0.5em">
+                <b><?php echo __('Apri un ticket per un altro utente'); ?></b>
+            </div>
+            </td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+            <td colspan="2">
+                <div>
+                    <p id="msg_info"><i class="icon-info-sign"></i>&nbsp; <?php echo __('Search existing users.');?>
+                    </p>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <input type="text" class="search-input" style="width:100%;"
+                    placeholder="<?php echo __('Search by email, phone or name'); ?>" id="user-search"
+                    autofocus autocorrect="off" autocomplete="off"/>
+                </div>
+            </td>    
+        </tr>
+    </tbody>
+    
+    <tbody>
+        <tr>
+            <td colspan="2">
+                <label for="othername" class=""><?php echo __('Name'); ?>:</label>
+                <br>
+                <span>
+                    <input type="text" id="othername" name="othername" size=40></input>
+                </span>
+            </td>
+        </tr>
+         <tr>
+            <td colspan="2">
+                <label for="otheremail" class=""><?php echo __('Email'); ?>:</label>
+                <br>
+                <span>
+                    <input type="text" id="otheremail" name="otheremail" size=40></input>
+                </span>
+            </td>
+        </tr>
+   </tbody>
     <tbody id="dynamic-form">
         <?php
         $options = array('mode' => 'create');
@@ -126,3 +173,31 @@ if ($info['topicId'] && ($topic=Topic::lookup($info['topicId']))) {
             window.location.href='index.php';">
   </p>
 </form>
+
+<script type="text/javascript">
+$(function() {
+    var last_req;
+    $('#user-search').typeahead({
+        source: function (typeahead, query) {
+            if (last_req) last_req.abort();
+            last_req = $.ajax({
+                url: "ajax.php/users?q="+query,
+                dataType: 'json',
+                success: function (data) {
+                    typeahead.process(data);
+                }
+            });
+        },
+        onselect: function (obj) {
+            //console.log(obj);
+            $('#user-search').val('');
+            $('#othername').val(obj.name);
+            $('#otheremail').val(obj.email);
+            $('#otherid').val(obj.id);
+                    return false;
+        },
+        property: "/bin/true"
+    });
+
+});
+</script>

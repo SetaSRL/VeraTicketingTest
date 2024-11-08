@@ -58,6 +58,40 @@ class TasksAjaxAPI extends AjaxController {
         return $this->json_encode($tasks);
     }
 
+    function searchTitle() {
+        if(!isset($_REQUEST['q'])) {
+            Http::response(400, __('Query argument is required'));
+        }
+        $matches = array();
+        if (!$_REQUEST['q'])
+            return $this->json_encode($matches);
+
+        $q = Format::sanitize($_REQUEST['q']);
+        
+        if (strlen(Format::searchable($q)) < 3)
+            return $this->encode(array());
+            
+       
+            
+         $hits = TaskModel::objects()
+            ->filter(Q::any(array(
+                'cdata__title__contains' => $q,
+            )))
+            ->values('staff_id','number','cdata__title')
+            ->distinct('cdata__title');
+       
+        foreach ($hits as $T) {
+            $tasks[] = array('id'=>$T['cdata__title'], 'value'=>$T['cdata__title'],
+                'info'=>"{$T['cdata__title']}",
+                "/bin/true" => $q);
+        };
+            
+      
+             
+       
+        return $this->json_encode($tasks);
+
+    }
     function triggerThreadAction($task_id, $thread_id, $action) {
         $thread = ThreadEntry::lookup($thread_id);
         if (!$thread)

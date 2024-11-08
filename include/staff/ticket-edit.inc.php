@@ -5,6 +5,7 @@ if (!defined('OSTSCPINC')
     die('Access Denied');
 
 $info=Format::htmlchars(($errors && $_POST)?$_POST:$ticket->getUpdateInfo(), true);
+
 if ($_POST)
     // Reformat duedate to the display standard (but don't convert to local
     // timezone)

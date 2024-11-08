@@ -29,6 +29,7 @@ $isManager = $dept->isManager($thisstaff); //Check if Agent is Manager
 $canRelease = ($isManager || $role->hasPerm(Ticket::PERM_RELEASE)); //Check if Agent can release tickets
 $blockReply = $ticket->isChild() && $ticket->getMergeType() != 'visual';
 $canMarkAnswered = ($isManager || $role->hasPerm(Ticket::PERM_MARKANSWERED)); //Check if Agent can mark as answered/unanswered
+$enabledAutoTask =  $ticket->isMultitaskEnabled();
 
 //Useful warnings and errors the user might want to know!
 if ($ticket->isClosed() && !$ticket->isReopenable())
@@ -156,7 +157,16 @@ if($ticket->isOverdue())
             } ?>
             <div id="action-dropdown-more" class="action-dropdown anchor-right">
               <ul>
-                <?php
+                 <?php
+                 if ($role->hasPerm(Ticket::PERM_EDIT) &&  $enabledAutoTask && $ticket->isOpen()) {?>
+                    <li><a class="ticket-action" href="#tickets/<?php
+                    echo $ticket->getId(); ?>/multitask"
+                    data-redirect="tickets.php?id=<?php echo
+                    $ticket->getId(); ?>"
+                    href="#tickets/<?php echo $ticket->getId(); ?>"><i class="icon-list-ul"></i> <?php
+                    echo __('Task Multipli'); ?></a></li>
+                 <?php
+                 }
                  if ($role->hasPerm(Ticket::PERM_EDIT)) { ?>
                     <li><a class="change-user" href="#tickets/<?php
                     echo $ticket->getId(); ?>/change-user"

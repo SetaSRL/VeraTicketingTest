@@ -294,6 +294,54 @@ class TicketsAjaxAPI extends AjaxController {
         include STAFFINC_DIR . 'templates/ticket-preview.tmpl.php';
     }
 
+    function multitask($tid) {
+        global $thisstaff;
+        if (!($ticket=Ticket::lookup($tid)))
+            Http::response(404, __('No such ticket'));
+
+        if (!$ticket->checkStaffPerm($thisstaff, Task::PERM_CREATE))
+            Http::response(403, 'Permission denied');
+        
+        $vars = array();
+        $errors = array();
+        $return='';
+        $returnArray=$ticket->getMultitasks();
+      
+           
+        $index=0;
+        foreach ($returnArray as $k=>$tasks) {
+          if ($ticket->getTopicID()==$k) {
+                  foreach ($tasks as $T) {
+                       $vars['object_id'] = $tid;
+                       $vars['object_type'] = 'T';
+                       $vars['internal_formdata']['dept_id'] = $ticket->getDeptId();
+                       $vars['staffId'] = $thisstaff->getId();
+                       $vars['poster'] = $thisstaff;
+                       $vars['ip_address'] = $_SERVER['REMOTE_ADDR'];
+                       $vars['internal_formdata']["assignee"] = $ticket->getAssignee();
+                       $thisform =  TaskForm::getInstance();
+                       foreach ($thisform->getFields() as $f) {
+                          $vars['default_formdata'][$f->get('name')] =  $T;
+                        };
+                          $vars['description'] = $T;
+                         if (($task=Task::create($vars, $errors))) { 
+                          $return .= sprintf('<li class="items-action">%s</li>','Creazione task ' . $T . " eseguita con successo");
+                         //} else {      
+                        }
+                  };
+              }
+         
+        };
+            
+        $action = sprintf('#tickets/%s/tasks',$ticket->getId());
+        $info['action'] = $action;
+        $info['title'] =  __('Message');
+        $info['buttontext'] =  __('Done'); 
+        $info['returncontent'] = $return;
+        include STAFFINC_DIR . 'templates/multitask.tmpl.php';                
+   }
+
+
     function viewUser($tid) {
         global $thisstaff;
 
@@ -1829,11 +1877,12 @@ class TicketsAjaxAPI extends AjaxController {
 
         if (!$ticket->checkStaffPerm($thisstaff, Task::PERM_CREATE))
             Http::response(403, 'Permission denied');
-
+       
         $info=$errors=array();
-
+        
         // Internal form
         $iform = TaskForm::getInternalForm($_POST);
+       
         // Due date must be before tickets due date
         if ($ticket && $ticket->getEstDueDate()
                 &&  Misc::db2gmtime($ticket->getEstDueDate()) > Misc::gmtime()
@@ -1843,6 +1892,7 @@ class TicketsAjaxAPI extends AjaxController {
         $vars = array_merge($_SESSION[':form-data'] ?: array(), $vars);
 
         if ($_POST) {
+            
             Draft::deleteForNamespace(
                     sprintf('ticket.%d.task', $ticket->getId()),
                     $thisstaff->getId());
@@ -1858,6 +1908,7 @@ class TicketsAjaxAPI extends AjaxController {
 
             if ($isvalid) {
                 $vars = $_POST;
+                print_r($vars);
                 $vars['object_id'] = $ticket->getId();
                 $vars['object_type'] = ObjectModel::OBJECT_TYPE_TICKET;
                 $vars['default_formdata'] = $form->getClean();

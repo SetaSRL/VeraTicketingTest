@@ -96,7 +96,7 @@ $hidden_cols = $queue->inheritColumns() || $queue->useStandardColumns();
     <?php
     foreach ($queue->getStandardColumns() as $c) { ?>
     <tr>
-      <td nowrap><?php echo Format::htmlchars($c->heading); ?></td>
+      <td nowrap><?php echo __($c->heading); ?></td>
       <td nowrap><?php echo Format::htmlchars($c->name); ?></td>
       <td>&nbsp;</td>
     </tr>

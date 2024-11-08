@@ -39,7 +39,7 @@ foreach ($pages as $P) {
         break;
     }
 }
-
+echo (json_encode($selected_page) . '<br\>');
 if (!$selected_page)
     Http::response(404, __('Page Not Found'));
 

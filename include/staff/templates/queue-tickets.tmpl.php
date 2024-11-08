@@ -125,7 +125,6 @@ $count = $count ?? $queue->getCount($thisstaff);
 $pageNav->setTotal($count, true);
 $pageNav->setURL('tickets.php', $args);
 ?>
-
 <!-- SEARCH FORM START -->
 <div id='basic_search'>
   <div class="pull-right" style="height:25px">
@@ -167,7 +166,7 @@ return false;">
             <div class="pull-left flush-left">
                 <h2><a href="<?php echo $refresh_url; ?>"
                     title="<?php echo __('Refresh'); ?>"><i class="icon-refresh"></i> <?php echo
-                    $queue->getName(); ?></a>
+                    __($queue->getName()); ?></a>
                     <?php
                     if (($crit=$queue->getSupplementalCriteria()))
                         echo sprintf('<i class="icon-filter"
@@ -250,6 +249,7 @@ foreach ($columns as $C) {
     echo sprintf('<th width="%s" data-id="%d">%s</th>',
         $C->getWidth(), $C->id, $heading);
 }
+
 ?>
     </tr>
   </thead>

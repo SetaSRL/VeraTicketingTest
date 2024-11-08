@@ -72,7 +72,7 @@
                 var text = this.firstChild.textContent;
                 if (parseInt(text) > 10000)
                     this.firstChild.textContent =
-                        $.datepicker.formatDate('mm-dd-yy',
+                        $.datepicker.formatDate('dd-mm-yy',
                         new Date(parseInt(text) * 86400000));
             });
         }, 50);

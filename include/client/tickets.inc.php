@@ -175,7 +175,6 @@ foreach (Topic::getHelpTopics(true) as $id=>$name) {
         ><i class="refresh icon-refresh"></i>
     <?php echo __('Tickets'); ?>
     </a>
-
 <div class="pull-right states">
     <small>
 <?php if ($openTickets) { ?>
@@ -200,14 +199,14 @@ if ($closedTickets) {?>
     </small>
 </div>
 </h1>
-<table id="ticketTable" width="800" border="0" cellspacing="0" cellpadding="0">
+<table id="ticketTable" width="920" border="0" cellspacing="0" cellpadding="0">
     <caption><?php echo $showing; ?></caption>
     <thead>
         <tr>
             <th nowrap>
                 <a href="tickets.php?sort=ID&order=<?php echo $negorder; ?><?php echo $qstr; ?>" title="<?php echo sprintf('%s %s', __('Sort By'), __('Ticket ID')); ?>"><?php echo __('Ticket #');?>&nbsp;<i class="icon-sort"></i></a>
             </th>
-            <th width="120">
+            <th width="130">
                 <a href="tickets.php?sort=date&order=<?php echo $negorder; ?><?php echo $qstr; ?>" title="<?php echo sprintf('%s %s', __('Sort By'), __('Date')); ?>"><?php echo __('Create Date');?>&nbsp;<i class="icon-sort"></i></a>
             </th>
             <th width="100">

@@ -19,9 +19,11 @@ asort($queues);
 $queues = array(0 => ('—'.__("My Searches").'—')) + $queues;
 $queue = $search;
 $qname = $search->getName() ?:  __('Advanced Ticket Search');
+$myString = __('Welcome') ; 
 ?>
 <div id="advanced-search" class="advanced-search">
 <h3 class="drag-handle"><?php echo Format::htmlchars($qname); ?></h3>
+<h2><?php Format::htmlchars($myString); ?></h2>
 <a class="close" href=""><i class="icon-remove-circle"></i></a>
 <hr/>
 <?php

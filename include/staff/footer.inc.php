@@ -2,8 +2,9 @@
 </div>
 <?php if (!isset($_SERVER['HTTP_X_PJAX'])) { ?>
     <div id="footer">
-        <?php echo __('Copyright &copy;') ?> 2006-<?php echo date('Y'); ?>&nbsp;<?php
-        echo Format::htmlchars((string) $ost->company ?: 'osTicket.com'); ?>&nbsp;<?php echo __('All Rights Reserved.'); ?>
+        <p><?php echo __('Copyright &copy;') . date('Y'); ?>&nbsp;<?php
+        echo Format::htmlchars((string) $ost->company ?: 'osTicket.com'); ?>&nbsp;<?php echo __('All Rights Reserved.'); ?></p>
+        <a id="poweredBy" href="https://setagroup.it" target="_blank"><?php echo __('Helpdesk software - powered by osTicket'); ?></a>
     </div>
 <?php
 if(is_object($thisstaff) && $thisstaff->isStaff()) { ?>

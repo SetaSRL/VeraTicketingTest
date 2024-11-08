@@ -289,6 +289,17 @@ input.submit:hover, input.submit:active {
     filter: progid:DXImageTransform.Microsoft.Dropshadow(OffX=0, OffY=0, Color='#444');
 }
 
+.content #poweredBy {
+    display: block;
+    width: 126px;
+    height: 32px;
+    outline: none;
+    text-indent: -9999px;
+    margin: 0 auto;
+    background: url('../images/poweredby.png') top left no-repeat;
+    background-size: auto 30px;
+}
+
 #company {
     position:absolute;
     left: 50%;

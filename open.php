@@ -28,7 +28,7 @@ if ($_POST) {
         elseif(strcmp($_SESSION['captcha'], md5(strtoupper($_POST['captcha']))))
             $errors['captcha']=sprintf('%s - %s', __('Invalid'), __('Please try again!'));
     }
-
+   
     $tform = TicketForm::objects()->one()->getForm($vars);
     $messageField = $tform->getField('message');
     $attachments = $messageField->getWidget()->getAttachments();
@@ -37,10 +37,17 @@ if ($_POST) {
         if ($messageField->isAttachmentsEnabled())
             $vars['files'] = $attachments->getFiles();
     }
-
+    
+    if ($vars['otheremail']) {
+        $vars['email'] = $vars['otheremail'];
+        $vars['ccs'] = array($vars['uid']);
+        $vars['uid'] = $vars['otherid'];
+    };
+   
     // Drop the draft.. If there are validation errors, the content
     // submitted will be displayed back to the user
     Draft::deleteForNamespace('ticket.client.'.substr(session_id(), -12));
+   
     //Ticket::create...checks for errors..
     if(($ticket=Ticket::create($vars, $errors, SOURCE))){
         $msg=__('Support ticket request created');

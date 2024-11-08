@@ -45,8 +45,14 @@ $dispatcher = patterns('',
     )),
     url('^/i18n/(?P<lang>[\w_]+)/', patterns('ajax.i18n.php:i18nAjaxAPI',
         url_get('(?P<tag>\w+)$', 'getLanguageFile')
+    )),
+    url('^/users', patterns('ajax.users.php:UsersAjaxAPI',
+    url_get('^$', 'search'),
+    url_get('^/local$', 'search', array('local')),
+    url_get('^/remote$', 'search', array('remote'))
     ))
 );
+
 Signal::send('ajax.client', $dispatcher);
 print $dispatcher->resolve(Osticket::get_path_info());
 ?>

@@ -33,7 +33,7 @@ $settingOptions=array(
         array(__('Knowledgebase Settings'), 'settings.kb'),
 );
 //Handle a POST.
-$target=(isset($_REQUEST['t']) && $settingOptions[$_REQUEST['t']])?$_REQUEST['t']:'system';
+$target=(isset($_REQUEST['t']) && $settingOptions[$_REQUEST['t']])?$_REQUEST['t']:'users';
 $page = false;
 if (isset($settingOptions[$target]))
     $page = $settingOptions[$target];

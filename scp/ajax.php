@@ -198,6 +198,7 @@ $dispatcher = patterns('',
         url('^(?P<tid>\d+)/refer(?:/(?P<to>\w+))?$', 'refer'),
         url('^(?P<tid>\d+)/referrals$', 'referrals'),
         url('^(?P<tid>\d+)/claim$', 'claim'),
+         url('^(?P<tid>\d+)/multitask$', 'multitask'),
         url('^export/(?P<id>\d+)$', 'export'),
         url('^export/adhoc,(?P<key>[\w=/+]+)$', 'export'),
         url('^search', patterns('ajax.search.php:SearchAjaxAPI',
@@ -217,7 +218,7 @@ $dispatcher = patterns('',
             url_post('^(?P<id>\d+)/enable$', 'undisableQueues')
         ))
     )),
-    url('^/tasks/', patterns('ajax.tasks.php:TasksAjaxAPI',
+       url('^/tasks/', patterns('ajax.tasks.php:TasksAjaxAPI',
         url_get('^(?P<tid>\d+)/preview$', 'preview'),
         url_get('^(?P<tid>\d+)/edit', 'edit'),
         url_post('^(?P<tid>\d+)/edit$', 'edit'),
@@ -237,7 +238,8 @@ $dispatcher = patterns('',
         url('^add$', 'add'),
         url('^(?P<tid>\d+)/add', 'add'),
         url('^lookup', 'lookup'),
-        url('^mass/(?P<action>\w+)(?:/(?P<what>\w+))?', 'massProcess')
+        url('^mass/(?P<action>\w+)(?:/(?P<what>\w+))?', 'massProcess'),
+        url('^titles$','searchTitle')
     )),
     url('^/thread/', patterns('ajax.thread.php:ThreadAjaxAPI',
         url_get('^(?P<tid>\d+)/collaborators/(?P<manage>\d+)/preview$', 'previewCollaborators'),
@@ -317,7 +319,7 @@ $dispatcher = patterns('',
     url('^/email', patterns('ajax.email.php:EmailAjaxAPI',
         url_post('^/(?P<id>\d+)/stash$', 'stashFormData'),
         url_post('^/(?P<id>\d+)/auth/config/(?P<type>\w+)/delete$', 'deleteToken'),
-        url('^/(?P<id>\d+)/auth/config/(?P<type>\w+)/(?P<auth>.+)$', 'configureAuth'),
+        url('^/(?P<id>\d+)/auth/config/(?P<type>\w+)/(?P<auth>.+)$', 'configureAuth')
     ))
 );
 
